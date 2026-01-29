@@ -1,31 +1,44 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>AI Toolbox</title>
-    
+{% extends "base.html" %}
 
-</head>
-<body>
-    <h1>AI Toolbox</h1>
+{% block content %}
+<h1>Welcome to AI Toolbox</h1>
+<p>A centralized platform to explore AI tools across multiple domains.</p>
 
-    {% if session.username %}
-        <p>Welcome, {{ session.username }}</p>
-        <a href="/logout">Logout</a>
-    {% else %}
-        <a href="/login">User Login</a> |
-        <a href="/register">Register</a>
-    {% endif %}
+{% if session.username %}
+    <p><strong>Logged in as:</strong> {{ session.username }}</p>
+{% endif %}
 
-    <hr>
+<h3 style="margin-top:30px;">Explore by Category</h3>
 
-    <!-- Admin Section -->
-    <h3>Admin Panel</h3>
-    <a href="/admin/login">Admin Login</a>
+<div class="tool-grid" style="margin-top:20px;">
+    <div class="tool-card">
+        <h4>Education</h4>
+        <p>AI tools for learning, tutoring, and academic productivity.</p>
+        <a href="/tools?category=Education" class="btn">View Tools</a>
+    </div>
 
- <!-- Browse Tools -->
-<h3>Browse Tools</h3>   
-<a href="/tools">Browse AI Tools</a>
+    <div class="tool-card">
+        <h4>Business & Marketing</h4>
+        <p>AI tools for growth, content, analytics, and automation.</p>
+        <a href="/tools?category=Business & Marketing" class="btn">View Tools</a>
+    </div>
 
-</body>
-</html>
+    <div class="tool-card">
+        <h4>Coding & Development</h4>
+        <p>AI assistants for coding, debugging, and documentation.</p>
+        <a href="/tools?category=Coding & Development" class="btn">View Tools</a>
+    </div>
 
+    <div class="tool-card">
+        <h4>Healthcare</h4>
+        <p>AI tools for diagnostics, monitoring, and analysis.</p>
+        <a href="/tools?category=Healthcare" class="btn">View Tools</a>
+    </div>
+
+    <div class="tool-card">
+        <h4>Design</h4>
+        <p>AI-powered creativity for graphics, UI/UX, and content.</p>
+        <a href="/tools?category=Design" class="btn">View Tools</a>
+    </div>
+</div>
+{% endblock %}

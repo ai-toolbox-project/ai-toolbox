@@ -1,32 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Admin Dashboard</title>
-</head>
-<body>
-    <h2>Admin Dashboard</h2>
+{% extends "base.html" %}
 
-    <a href="/admin/add-tool">Add New Tool</a>
-    <br><br>
+{% block content %}
+<h2>Admin Dashboard</h2>
 
-    <table border="1" cellpadding="10">
-        <tr>
-            <th>Tool Name</th>
-            <th>Category</th>
-            <th>Usability</th>
-            <th>Action</th>
-        </tr>
+<a href="/admin/add-tool" class="btn">+ Add New Tool</a>
 
-        {% for tool in tools %}
-        <tr>
-            <td>{{ tool.tool_name }}</td>
-            <td>{{ tool.category_name }}</td>
-            <td>{{ tool.usability_score }}</td>
-            <td>
-                <a href="/admin/delete-tool/{{ tool.tool_id }}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</body>
-</html>
+<table style="margin-top:20px;">
+    <tr>
+        <th>Tool Name</th>
+        <th>Category</th>
+        <th>Usability</th>
+        <th>Action</th>
+    </tr>
+
+    {% for tool in tools %}
+    <tr>
+        <td>{{ tool.tool_name }}</td>
+        <td>{{ tool.category_name }}</td>
+        <td>{{ tool.usability_score }}/10</td>
+        <td>
+            <a href="/admin/delete-tool/{{ tool.tool_id }}" class="btn">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

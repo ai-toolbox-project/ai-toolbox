@@ -1,0 +1,173 @@
+/* ===== RESET ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+/* ===== BODY ===== */
+body {
+    background: #f8fafc;
+    color: #1f2933;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+}
+
+/* ===== NAVBAR ===== */
+.navbar {
+    background: #0f172a;
+    padding: 14px 0;
+}
+
+.nav-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nav-links a {
+    color: #cbd5e1;
+    text-decoration: none;
+    margin-left: 18px;
+    font-size: 14px;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+.nav-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #2563eb;
+    color: white !important;
+}
+
+/* ===== PAGE CONTENT ===== */
+.page-content {
+    padding: 40px 0;
+}
+
+/* ===== HEADINGS ===== */
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+    display: inline-block;
+    padding: 10px 16px;
+    background: #2563eb;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+/* ===== FORMS ===== */
+form {
+    background: white;
+    padding: 25px;
+    max-width: 420px;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+input, textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    border: 1px solid #cbd5e1;
+}
+
+/* ===== TOOL / CATEGORY CARDS (PREMIUM) ===== */
+.tool-card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tool-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 18px 45px rgba(0,0,0,0.12);
+}
+
+.tool-card h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #0f172a;
+}
+
+.tool-card p {
+    font-size: 14px;
+    color: #475569;
+    margin-bottom: 14px;
+    line-height: 1.5;
+}
+
+.tool-card .btn {
+    align-self: flex-start;
+}
+
+
+/* ===== TABLE ===== */
+table {
+    width: 100%;
+    background: white;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+    background: #f1f5f9;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    background: #0f172a;
+    color: #cbd5e1;
+    text-align: center;
+    padding: 14px;
+    font-size: 14px;
+}
+
+/* ===== CENTER FORMS ===== */
+.form-center {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 40px;
+}

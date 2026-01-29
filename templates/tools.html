@@ -1,32 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>AI Tools</title>
-</head>
-<body>
-    <h2>AI Tools</h2>
+{% extends "base.html" %}
 
-    <form method="GET">
-        <input type="text" name="search" placeholder="Search tools">
-        <button type="submit">Search</button>
-    </form>
+{% block content %}
+<h2>Explore AI Tools</h2>
 
-    <h3>Categories</h3>
+<form method="GET">
+    <input type="text" name="search" placeholder="Search AI tools">
+</form>
+
+<div style="margin:20px 0;">
     {% for cat in categories %}
-        <a href="/tools?category={{ cat.category_name }}">
+        <a href="/tools?category_id={{ cat.category_id }}" class="btn">
+
             {{ cat.category_name }}
-        </a> |
+        </a>
     {% endfor %}
-    <a href="/tools">All</a>
+    <a href="/tools" class="btn">All</a>
+</div>
 
-    <hr>
-
+<div class="tool-grid">
     {% for tool in tools %}
+    <div class="tool-card">
         <h4>{{ tool.tool_name }}</h4>
         <p><strong>Category:</strong> {{ tool.category_name }}</p>
         <p>{{ tool.description }}</p>
-        <a href="{{ tool.access_link }}" target="_blank">Visit Tool</a>
-        <hr>
+        <a href="{{ tool.access_link }}" target="_blank" class="btn">Visit Tool</a>
+    </div>
     {% endfor %}
-</body>
-</html>
+</div>
+{% endblock %}
+

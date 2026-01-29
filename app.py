@@ -246,12 +246,20 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
+# -------------------- ADMIN LOGOUT --------------------
+@app.route("/admin/logout")
+def admin_logout():
+    session.pop("admin_id", None)
+    session.pop("admin_username", None)
+    return redirect(url_for("admin_login"))
+
+
 # -------------------- USER TOOL LIST --------------------
 @app.route("/tools")
 def tools():
     conn = get_db_connection()
 
-    category = request.args.get("category")
+    category_id = request.args.get("category_id")
     search = request.args.get("search")
 
     query = """
@@ -261,12 +269,12 @@ def tools():
     """
     params = []
 
-    if category:
-        query += " WHERE CAT_TB.category_name = ?"
-        params.append(category)
+    if category_id:
+        query += " WHERE TOOL_TB.category_id = ?"
+        params.append(category_id)
 
     if search:
-        query += " AND tool_name LIKE ?" if category else " WHERE tool_name LIKE ?"
+        query += " AND tool_name LIKE ?" if category_id else " WHERE tool_name LIKE ?"
         params.append(f"%{search}%")
 
     tools = conn.execute(query, params).fetchall()

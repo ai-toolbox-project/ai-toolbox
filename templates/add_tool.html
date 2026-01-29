@@ -1,37 +1,31 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Add AI Tool</title>
-</head>
-<body>
-    <h2>Add New AI Tool</h2>
+{% extends "base.html" %}
 
-    <form method="POST">
-        <input type="text" name="tool_name" placeholder="Tool Name" required><br><br>
+{% block content %}
+<h2>Add New AI Tool</h2>
+<div class="form-center">
+<form method="POST">
+    <input type="text" name="tool_name" placeholder="Tool Name" required>
 
-        <textarea name="description" placeholder="Description" required></textarea><br><br>
+    <textarea name="description" placeholder="Tool Description" required></textarea>
 
-        <textarea name="benefits" placeholder="Benefits" required></textarea><br><br>
+    <textarea name="benefits" placeholder="Benefits" required></textarea>
 
-        <textarea name="limitations" placeholder="Limitations" required></textarea><br><br>
+    <textarea name="limitations" placeholder="Limitations" required></textarea>
 
-        <input type="number" name="usability_score" placeholder="Usability Score (1-10)" required><br><br>
+    <input type="number" name="usability_score" placeholder="Usability Score (1-10)" min="1" max="10" required>
 
-        <input type="url" name="access_link" placeholder="Tool Website Link" required><br><br>
+    <input type="url" name="access_link" placeholder="Official Tool Website" required>
 
-        <select name="category_id" required>
-            <option value="">Select Category</option>
-            {% for category in categories %}
-                <option value="{{ category.category_id }}">
-                    {{ category.category_name }}
-                </option>
-            {% endfor %}
-        </select><br><br>
+    <select name="category_id" required>
+        <option value="">Select Category</option>
+        {% for category in categories %}
+            <option value="{{ category.category_id }}">
+                {{ category.category_name }}
+            </option>
+        {% endfor %}
+    </select>
 
-        <button type="submit">Add Tool</button>
-    </form>
-
-    <br>
-    <a href="/admin/dashboard">Back to Dashboard</a>
-</body>
-</html>
+    <button class="btn">Add Tool</button>
+</form>
+</div>
+{% endblock %}
