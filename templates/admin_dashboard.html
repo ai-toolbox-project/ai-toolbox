@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+
+    <a href="/admin/add-tool">Add New Tool</a>
+    <br><br>
+
+    <table border="1" cellpadding="10">
+        <tr>
+            <th>Tool Name</th>
+            <th>Category</th>
+            <th>Usability</th>
+            <th>Action</th>
+        </tr>
+
+        {% for tool in tools %}
+        <tr>
+            <td>{{ tool.tool_name }}</td>
+            <td>{{ tool.category_name }}</td>
+            <td>{{ tool.usability_score }}</td>
+            <td>
+                <a href="/admin/delete-tool/{{ tool.tool_id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

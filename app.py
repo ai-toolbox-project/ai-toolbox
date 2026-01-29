@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+import sqlite3
 
 app = Flask(__name__)
 app.secret_key = "ai_toolbox_secret_key"  # later you can change this
@@ -48,6 +49,21 @@ def init_db():
         )
     """)
 
+    categories = [
+        "Education",
+        "Business & Marketing",
+        "Coding & Development",
+        "Healthcare",
+        "Design"
+    ]
+
+    for cat in categories:
+        cursor.execute(
+            "INSERT OR IGNORE INTO CAT_TB (category_name) VALUES (?)",
+            (cat,)
+        )
+
+
     # Tool table
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS TOOL_TB (
@@ -62,6 +78,20 @@ def init_db():
             FOREIGN KEY (category_id) REFERENCES CAT_TB (category_id)
         )
     """)
+
+         # -------------------- DEFAULT ADMIN --------------------
+    cursor.execute(
+        "SELECT * FROM ADMIN_TB WHERE username = ?", ("admin",)
+    )
+    admin = cursor.fetchone()
+
+    if not admin:
+        cursor.execute(
+            "INSERT INTO ADMIN_TB (username, password_hash) VALUES (?, ?)",
+            ("admin", generate_password_hash("admin123"))
+        )
+
+
 
     conn.commit()
     conn.close()
@@ -100,6 +130,28 @@ def register():
 
     return render_template("register.html")
 
+# -------------------- ADMIN LOGIN --------------------
+@app.route("/admin/login", methods=["GET", "POST"])
+def admin_login():
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
+        conn = get_db_connection()
+        admin = conn.execute(
+            "SELECT * FROM ADMIN_TB WHERE username = ?", (username,)
+        ).fetchone()
+        conn.close()
+
+        if admin and check_password_hash(admin["password_hash"], password):
+            session["admin_id"] = admin["admin_id"]
+            session["admin_username"] = admin["username"]
+            return redirect(url_for("admin_dashboard"))
+        else:
+            return "Invalid admin credentials"
+
+    return render_template("admin_login.html")
+
 # -------------------- USER LOGIN --------------------
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -121,6 +173,24 @@ def login():
             return "Invalid credentials"
 
     return render_template("login.html")
+
+
+# -------------------- ADMIN DASHBOARD --------------------
+@app.route("/admin/dashboard")
+def admin_dashboard():
+    if "admin_id" not in session:
+        return redirect(url_for("admin_login"))
+
+    conn = get_db_connection()
+    tools = conn.execute("""
+        SELECT TOOL_TB.*, CAT_TB.category_name
+        FROM TOOL_TB
+        LEFT JOIN CAT_TB ON TOOL_TB.category_id = CAT_TB.category_id
+    """).fetchall()
+    conn.close()
+
+    return render_template("admin_dashboard.html", tools=tools)
+
 
 # -------------------- LOGOUT --------------------
 @app.route("/logout")

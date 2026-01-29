@@ -10,9 +10,16 @@
         <p>Welcome, {{ session.username }}</p>
         <a href="/logout">Logout</a>
     {% else %}
-        <a href="/login">Login</a> |
+        <a href="/login">User Login</a> |
         <a href="/register">Register</a>
     {% endif %}
 
+    <hr>
+
+    <!-- Admin Section -->
+    <h3>Admin Panel</h3>
+    <a href="/admin/login">Admin Login</a>
+
 </body>
 </html>
+
