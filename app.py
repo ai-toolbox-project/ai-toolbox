@@ -23,6 +23,51 @@ def get_db_connection():
     conn.row_factory = sqlite3.Row
     return conn
 
+def init_db():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS CAT_TB (
+        category_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        category_name TEXT NOT NULL UNIQUE
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS TOOL_TB (
+        tool_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tool_name TEXT NOT NULL,
+        description TEXT,
+        benefits TEXT,
+        limitations TEXT,
+        usability_score INTEGER,
+        access_link TEXT,
+        category_id INTEGER,
+        FOREIGN KEY (category_id) REFERENCES CAT_TB (category_id)
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS USER_TB (
+        user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT,
+        email TEXT UNIQUE,
+        password TEXT
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS ADMIN_TB (
+        admin_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT UNIQUE,
+        password TEXT
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
 
 
 # -------------------- DATABASE INITIALIZATION --------------------
@@ -100,6 +145,36 @@ def init_db():
         )
 
 
+
+    conn.commit()
+    conn.close()
+
+init_db()
+
+def seed_data():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Default categories
+    categories = [
+        "Education",
+        "Business & Marketing",
+        "Coding & Development",
+        "Healthcare",
+        "Design"
+    ]
+
+    for cat in categories:
+        cursor.execute(
+            "INSERT OR IGNORE INTO CAT_TB (category_name) VALUES (?)",
+            (cat,)
+        )
+
+    # Default admin
+    cursor.execute(
+        "INSERT OR IGNORE INTO ADMIN_TB (username, password) VALUES (?, ?)",
+        ("admin", "admin123")
+    )
 
     conn.commit()
     conn.close()
