@@ -269,34 +269,32 @@ def admin_logout():
 # -------------------- USER TOOL LIST --------------------
 @app.route("/tools")
 def tools():
-    try:
-        conn = get_db_connection()
-        category_id = request.args.get("category_id")
-        search = request.args.get("search")
+    conn = get_db_connection()
 
-        query = """
-            SELECT TOOL_TB.*, CAT_TB.category_name
-            FROM TOOL_TB
-            JOIN CAT_TB ON TOOL_TB.category_id = CAT_TB.category_id
-        """
-        params = []
+    category_id = request.args.get("category_id")
+    search = request.args.get("search")
 
-        if category_id:
-            query += " WHERE TOOL_TB.category_id = ?"
-            params.append(category_id)
+    query = """
+        SELECT TOOL_TB.*, CAT_TB.category_name
+        FROM TOOL_TB
+        JOIN CAT_TB ON TOOL_TB.category_id = CAT_TB.category_id
+    """
+    params = []
 
-        if search:
-            query += " AND tool_name LIKE ?" if category_id else " WHERE tool_name LIKE ?"
-            params.append(f"%{search}%")
+    if category_id:
+        query += " WHERE TOOL_TB.category_id = ?"
+        params.append(category_id)
 
-        tools = conn.execute(query, params).fetchall()
-        categories = conn.execute("SELECT * FROM CAT_TB").fetchall()
-        conn.close()
+    if search:
+        query += " AND tool_name LIKE ?" if category_id else " WHERE tool_name LIKE ?"
+        params.append(f"%{search}%")
 
-        return render_template("tools.html", tools=tools, categories=categories)
+    tools = conn.execute(query, params).fetchall()
+    categories = conn.execute("SELECT * FROM CAT_TB").fetchall()
+    conn.close()
 
-    except Exception as e:
-        return f"Error: {e}"
+    return render_template("tools.html", tools=tools, categories=categories)
+
 
 # -------------------- RUN APP --------------------
 if __name__ == "__main__":
