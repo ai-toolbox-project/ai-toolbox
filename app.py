@@ -72,6 +72,62 @@ def init_db():
 def home():
     return render_template("index.html")
 
+# -------------------- USER REGISTER --------------------
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "POST":
+        username = request.form["username"]
+        email = request.form["email"]
+        password = request.form["password"]
+
+        hashed_password = generate_password_hash(password)
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute(
+                "INSERT INTO USER_TB (username, email, password_hash) VALUES (?, ?, ?)",
+                (username, email, hashed_password)
+            )
+            conn.commit()
+        except sqlite3.IntegrityError:
+            conn.close()
+            return "Email already exists"
+        
+        conn.close()
+        return redirect(url_for("login"))
+
+    return render_template("register.html")
+
+# -------------------- USER LOGIN --------------------
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = get_db_connection()
+        user = conn.execute(
+            "SELECT * FROM USER_TB WHERE email = ?", (email,)
+        ).fetchone()
+        conn.close()
+
+        if user and check_password_hash(user["password_hash"], password):
+            session["user_id"] = user["user_id"]
+            session["username"] = user["username"]
+            return redirect(url_for("home"))
+        else:
+            return "Invalid credentials"
+
+    return render_template("login.html")
+
+# -------------------- LOGOUT --------------------
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("login"))
+
 
 # -------------------- RUN APP --------------------
 if __name__ == "__main__":

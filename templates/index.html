@@ -5,6 +5,14 @@
 </head>
 <body>
     <h1>AI Toolbox</h1>
-    <p>Welcome to the AI Toolbox project.</p>
+
+    {% if session.username %}
+        <p>Welcome, {{ session.username }}</p>
+        <a href="/logout">Logout</a>
+    {% else %}
+        <a href="/login">Login</a> |
+        <a href="/register">Register</a>
+    {% endif %}
+
 </body>
 </html>
