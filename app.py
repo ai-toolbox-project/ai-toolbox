@@ -1,3 +1,5 @@
+from flask import Flask, render_template, request, redirect, url_for, session, flash
+
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -123,7 +125,8 @@ def register():
             conn.commit()
         except sqlite3.IntegrityError:
             conn.close()
-            return "Email already exists"
+            flash("Email already registered", "error")
+            return redirect(url_for("register"))
         
         conn.close()
         return redirect(url_for("login"))
@@ -148,7 +151,9 @@ def admin_login():
             session["admin_username"] = admin["username"]
             return redirect(url_for("admin_dashboard"))
         else:
-            return "Invalid admin credentials"
+            flash("Invalid admin credentials", "error")
+            return redirect(url_for("admin_login"))
+
 
     return render_template("admin_login.html")
 
@@ -170,7 +175,8 @@ def login():
             session["username"] = user["username"]
             return redirect(url_for("home"))
         else:
-            return "Invalid credentials"
+            flash("Invalid email or password", "error")
+            return redirect(url_for("login"))
 
     return render_template("login.html")
 
