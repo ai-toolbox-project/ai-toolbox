@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add AI Tool</title>
+</head>
+<body>
+    <h2>Add New AI Tool</h2>
+
+    <form method="POST">
+        <input type="text" name="tool_name" placeholder="Tool Name" required><br><br>
+
+        <textarea name="description" placeholder="Description" required></textarea><br><br>
+
+        <textarea name="benefits" placeholder="Benefits" required></textarea><br><br>
+
+        <textarea name="limitations" placeholder="Limitations" required></textarea><br><br>
+
+        <input type="number" name="usability_score" placeholder="Usability Score (1-10)" required><br><br>
+
+        <input type="url" name="access_link" placeholder="Tool Website Link" required><br><br>
+
+        <select name="category_id" required>
+            <option value="">Select Category</option>
+            {% for category in categories %}
+                <option value="{{ category.category_id }}">
+                    {{ category.category_name }}
+                </option>
+            {% endfor %}
+        </select><br><br>
+
+        <button type="submit">Add Tool</button>
+    </form>
+
+    <br>
+    <a href="/admin/dashboard">Back to Dashboard</a>
+</body>
+</html>

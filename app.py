@@ -191,6 +191,54 @@ def admin_dashboard():
 
     return render_template("admin_dashboard.html", tools=tools)
 
+# -------------------- ADMIN ADD TOOL --------------------
+@app.route("/admin/add-tool", methods=["GET", "POST"])
+def add_tool():
+    if "admin_id" not in session:
+        return redirect(url_for("admin_login"))
+
+    conn = get_db_connection()
+
+    if request.method == "POST":
+        tool_name = request.form["tool_name"]
+        description = request.form["description"]
+        benefits = request.form["benefits"]
+        limitations = request.form["limitations"]
+        usability_score = request.form["usability_score"]
+        access_link = request.form["access_link"]
+        category_id = request.form["category_id"]
+
+        conn.execute("""
+            INSERT INTO TOOL_TB
+            (tool_name, description, benefits, limitations, usability_score, access_link, category_id)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (
+            tool_name, description, benefits, limitations,
+            usability_score, access_link, category_id
+        ))
+        conn.commit()
+        conn.close()
+
+        return redirect(url_for("admin_dashboard"))
+
+    categories = conn.execute("SELECT * FROM CAT_TB").fetchall()
+    conn.close()
+
+    return render_template("add_tool.html", categories=categories)
+
+# -------------------- ADMIN DELETE TOOL --------------------
+@app.route("/admin/delete-tool/<int:tool_id>")
+def delete_tool(tool_id):
+    if "admin_id" not in session:
+        return redirect(url_for("admin_login"))
+
+    conn = get_db_connection()
+    conn.execute("DELETE FROM TOOL_TB WHERE tool_id = ?", (tool_id,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("admin_dashboard"))
+
 
 # -------------------- LOGOUT --------------------
 @app.route("/logout")
