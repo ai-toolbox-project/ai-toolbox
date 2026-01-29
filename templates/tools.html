@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Tools</title>
+</head>
+<body>
+    <h2>AI Tools</h2>
+
+    <form method="GET">
+        <input type="text" name="search" placeholder="Search tools">
+        <button type="submit">Search</button>
+    </form>
+
+    <h3>Categories</h3>
+    {% for cat in categories %}
+        <a href="/tools?category={{ cat.category_name }}">
+            {{ cat.category_name }}
+        </a> |
+    {% endfor %}
+    <a href="/tools">All</a>
+
+    <hr>
+
+    {% for tool in tools %}
+        <h4>{{ tool.tool_name }}</h4>
+        <p><strong>Category:</strong> {{ tool.category_name }}</p>
+        <p>{{ tool.description }}</p>
+        <a href="{{ tool.access_link }}" target="_blank">Visit Tool</a>
+        <hr>
+    {% endfor %}
+</body>
+</html>

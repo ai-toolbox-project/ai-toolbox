@@ -246,6 +246,35 @@ def logout():
     session.clear()
     return redirect(url_for("login"))
 
+# -------------------- USER TOOL LIST --------------------
+@app.route("/tools")
+def tools():
+    conn = get_db_connection()
+
+    category = request.args.get("category")
+    search = request.args.get("search")
+
+    query = """
+        SELECT TOOL_TB.*, CAT_TB.category_name
+        FROM TOOL_TB
+        JOIN CAT_TB ON TOOL_TB.category_id = CAT_TB.category_id
+    """
+    params = []
+
+    if category:
+        query += " WHERE CAT_TB.category_name = ?"
+        params.append(category)
+
+    if search:
+        query += " AND tool_name LIKE ?" if category else " WHERE tool_name LIKE ?"
+        params.append(f"%{search}%")
+
+    tools = conn.execute(query, params).fetchall()
+    categories = conn.execute("SELECT * FROM CAT_TB").fetchall()
+    conn.close()
+
+    return render_template("tools.html", tools=tools, categories=categories)
+
 
 # -------------------- RUN APP --------------------
 if __name__ == "__main__":
