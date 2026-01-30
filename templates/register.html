@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>User Registration</h2>
+<div class="auth-wrapper">
+    <div class="auth-card">
+        <h2>Create Account</h2>
 
-<div class="form-center">
-<form method="POST">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <button class="btn">Register</button>
-</form>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Full Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <button>Register</button>
+        </form>
+    </div>
 </div>
 {% endblock %}
-

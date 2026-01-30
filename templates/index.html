@@ -1,44 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Welcome to AI Toolbox</h1>
-<p>A centralized platform to explore AI tools across multiple domains.</p>
+<div class="home-hero">
+    <div class="container">
+        <h1>All AI Tool Categories</h1>
+        <p>Find popular and featured AI tools by category</p>
 
-{% if session.username %}
-    <p><strong>Logged in as:</strong> {{ session.username }}</p>
-{% endif %}
+        <div class="category-grid">
 
-<h3 style="margin-top:30px;">Explore by Category</h3>
+            <div class="category-card">
+                <div class="category-icon">
+                    <img src="{{ url_for('static', filename='images/education.png') }}">
+                </div>
+                <div class="category-content">
+                    <h3>Education</h3>
+                    <p>AI tools for learning, tutoring, and academic productivity.</p>
+                    <a href="/tools?category_id=1" class="btn">View Tools</a>
+                </div>
+            </div>
 
-<div class="tool-grid" style="margin-top:20px;">
-    <div class="tool-card">
-        <h4>Education</h4>
-        <p>AI tools for learning, tutoring, and academic productivity.</p>
-        <a href="/tools?category=Education" class="btn">View Tools</a>
-    </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <img src="{{ url_for('static', filename='images/business.png') }}">
+                </div>
+                <div class="category-content">
+                    <h3>Business & Marketing</h3>
+                    <p>AI tools for growth, content, analytics, and automation.</p>
+                    <a href="/tools?category_id=2" class="btn">View Tools</a>
+                </div>
+            </div>
 
-    <div class="tool-card">
-        <h4>Business & Marketing</h4>
-        <p>AI tools for growth, content, analytics, and automation.</p>
-        <a href="/tools?category=Business & Marketing" class="btn">View Tools</a>
-    </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <img src="{{ url_for('static', filename='images/coding.png') }}">
+                </div>
+                <div class="category-content">
+                    <h3>Coding & Development</h3>
+                    <p>AI assistants for coding, debugging, and documentation.</p>
+                    <a href="/tools?category_id=3" class="btn">View Tools</a>
+                </div>
+            </div>
 
-    <div class="tool-card">
-        <h4>Coding & Development</h4>
-        <p>AI assistants for coding, debugging, and documentation.</p>
-        <a href="/tools?category=Coding & Development" class="btn">View Tools</a>
-    </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <img src="{{ url_for('static', filename='images/healthcare.png') }}">
+                </div>
+                <div class="category-content">
+                    <h3>Healthcare</h3>
+                    <p>AI tools for diagnostics, monitoring, and analysis.</p>
+                    <a href="/tools?category_id=4" class="btn">View Tools</a>
+                </div>
+            </div>
 
-    <div class="tool-card">
-        <h4>Healthcare</h4>
-        <p>AI tools for diagnostics, monitoring, and analysis.</p>
-        <a href="/tools?category=Healthcare" class="btn">View Tools</a>
-    </div>
+            <div class="category-card">
+                <div class="category-icon">
+                    <img src="{{ url_for('static', filename='images/design.png') }}">
+                </div>
+                <div class="category-content">
+                    <h3>Design</h3>
+                    <p>AI-powered creativity for graphics, UI/UX, and content.</p>
+                    <a href="/tools?category_id=5" class="btn">View Tools</a>
+                </div>
+            </div>
 
-    <div class="tool-card">
-        <h4>Design</h4>
-        <p>AI-powered creativity for graphics, UI/UX, and content.</p>
-        <a href="/tools?category=Design" class="btn">View Tools</a>
+        </div>
     </div>
 </div>
 {% endblock %}
