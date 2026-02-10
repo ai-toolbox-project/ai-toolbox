@@ -317,8 +317,8 @@ th {
 }
 
 .category-icon {
-    width: 90px;
-    height: 90px;
+    width: 200px;
+    height: 200px;
     flex-shrink: 0;
 }
 
