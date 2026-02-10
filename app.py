@@ -179,6 +179,8 @@ def seed_data():
     conn.commit()
     conn.close()
 
+seed_data()
+
 
 # -------------------- BASIC ROUTES --------------------
 @app.route("/")
